@@ -319,7 +319,10 @@ azd env set FABRIC_ACTIVATOR_ALERTS_EMAIL "myteam@company.com"
 ```bash
 # Use existing Fabric capacity (skips creating new capacity)
 azd env set AZURE_DEPLOY_FABRIC_CAPACITY false
+azd env set AZURE_FABRIC_CAPACITY_NAME '<your-existing-capacity-name>'
 ```
+
+> **Note:** When using an existing Fabric capacity, you must provide both `AZURE_DEPLOY_FABRIC_CAPACITY=false` and the name of your existing capacity via `AZURE_FABRIC_CAPACITY_NAME`.
 
 ### 3.2 Configuration Reference
 

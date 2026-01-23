@@ -40,6 +40,13 @@ param skuName string = 'F2'
 @description('Specifies the object id of a Microsoft Entra ID user to allow Event Hub data access for event simulation. This is typically the object id of the system administrator who deploys the Azure resources. Defaults to the deploying user.')
 param userObjectId string = deployer().objectId
 
+@description('Optional. Whether to deploy a new Fabric capacity. Set to false to use an existing capacity.')
+param deployFabricCapacity bool = true
+
+#disable-next-line no-unused-params
+@description('Optional. Name of an existing Fabric capacity to use. Required when deployFabricCapacity is false.')
+param existingFabricCapacityName string = ''
+
 @description('Optional. Tags to apply to all resources.')
 param tags resourceInput<'Microsoft.Resources/resourceGroups@2025-04-01'>.tags = {}
 
@@ -102,7 +109,7 @@ var fabricCapacityDefaultAdmins = deployer().?userPrincipalName == null
   : [deployer().userPrincipalName]
 var fabricTotalAdminMembers = union(fabricCapacityDefaultAdmins, fabricAdminMembers)
 
-module fabricCapacity 'br/public:avm/res/fabric/capacity:0.1.2' = {
+module fabricCapacity 'br/public:avm/res/fabric/capacity:0.1.2' = if (deployFabricCapacity) {
   name: take('avm.res.fabric.capacity.${fabricCapacityResourceName}', 64)
   params: {
     name: fabricCapacityResourceName
@@ -113,6 +120,9 @@ module fabricCapacity 'br/public:avm/res/fabric/capacity:0.1.2' = {
   }
 }
 
+// Use the created capacity name when deploying new capacity, otherwise use the provided existing name
+var resolvedFabricCapacityName = deployFabricCapacity ? fabricCapacityResourceName : existingFabricCapacityName
+
 @description('The location the resources were deployed to')
 output AZURE_LOCATION string = location
 
@@ -120,8 +130,7 @@ output AZURE_LOCATION string = location
 output AZURE_RESOURCE_GROUP string = resourceGroup().name
 
 @description('The name of the Fabric capacity resource')
-#disable-next-line BCP318
-output AZURE_FABRIC_CAPACITY_NAME string = fabricCapacity.outputs.name
+output AZURE_FABRIC_CAPACITY_NAME string = resolvedFabricCapacityName
 
 @description('The identities added as Fabric Capacity Admin members')
 output AZURE_FABRIC_CAPACITY_ADMINISTRATORS array = fabricTotalAdminMembers
