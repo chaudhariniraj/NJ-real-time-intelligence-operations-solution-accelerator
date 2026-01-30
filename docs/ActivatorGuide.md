@@ -8,7 +8,7 @@ After you complete the deployment of the solution accelerator, you will have an 
 
 You can edit an existing rule, or create a new rule based on your business needs. The image below shows the areas where you can update the conditions and action for each rule. The areas enclosed with the red box are places you can make edits: 
 
-- Alert Name3
+- Alert Name
 - Definition (Alert Conditions) 
 - Action with Options 
 
