@@ -56,7 +56,7 @@ param tags resourceInput<'Microsoft.Resources/resourceGroups@2025-04-01'>.tags =
 @description('Optional. Name of an existing Event Hub Namespace to use. When provided, a new Event Hub Namespace will not be created.')
 param existingEventHubNamespaceName string = ''
 
-@description('Optional. Name of an existing Event Hub within the namespace to use. When provided along with existingEventHubNamespaceName, a new Event Hub will not be created.')
+@description('Optional. Name of an existing Event Hub to use. MUST be used together with existingEventHubNamespaceName. This parameter is ignored if existingEventHubNamespaceName is not set.')
 param existingEventHubName string = ''
 
 @description('Optional. Name of an existing Fabric Capacity to use. When provided, a new Fabric Capacity will not be created.')
@@ -72,6 +72,9 @@ param existingFabricCapacityName string = ''
 // 1. Create new namespace + new event hub: neither existingEventHubNamespaceName nor existingEventHubName set
 // 2. Use existing namespace, create new event hub: only existingEventHubNamespaceName set
 // 3. Use existing namespace + existing event hub: both set
+//
+// IMPORTANT: existingEventHubName requires existingEventHubNamespaceName to be set.
+// If only existingEventHubName is provided, it will be ignored and a new namespace will be created.
 // ============================================================================
 
 var useExistingEventHubNamespace = !empty(existingEventHubNamespaceName)

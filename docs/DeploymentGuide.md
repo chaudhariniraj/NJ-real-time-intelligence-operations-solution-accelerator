@@ -337,6 +337,7 @@ azd env set FABRIC_WORKSPACE_NAME "My Existing Workspace Name"
 > **Note:** When using existing resources:
 >
 > - `azd` always deploys to a single resource group; if you reuse an existing Event Hub Namespace, deploy to the RG that contains it.
+> - **IMPORTANT:** `EXISTING_EVENT_HUB_NAME` requires `EXISTING_EVENT_HUB_NAMESPACE_NAME` to also be set (Event Hub name alone will be ignored)
 > - Fabric Capacity is looked up by name across your tenant (no resource group needed)
 > - For existing Fabric Workspace, provide the exact workspace name - the deployment will detect and reuse it
 >   - The workspace must already be assigned to the capacity you select (the template does not change capacity assignment automatically)
@@ -357,7 +358,7 @@ azd env set FABRIC_WORKSPACE_NAME "My Existing Workspace Name"
 | `FABRIC_ACTIVATOR_ALERTS_EMAIL` | Alert email address | `alerts@contoso.com` |
 | `EXISTING_FABRIC_CAPACITY_NAME` | Existing Fabric Capacity to reuse | None |
 | `EXISTING_EVENT_HUB_NAMESPACE_NAME` | Existing Event Hub Namespace | None |
-| `EXISTING_EVENT_HUB_NAME` | Existing Event Hub | None |
+| `EXISTING_EVENT_HUB_NAME` | Existing Event Hub (requires namespace to be set) | None |
 | `AZURE_RESOURCE_GROUP` | Target resource group | Prompted during deployment |
 
 
