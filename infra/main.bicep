@@ -114,8 +114,8 @@ resource resourceGroupTags 'Microsoft.Resources/tags@2021-04-01' = {
 var eventHubNamespaceName = useExistingEventHubNamespace ? existingEventHubNamespaceName : 'evhns${solutionSuffix}'
 var eventHubName = useExistingEventHub ? existingEventHubName : 'evh${solutionSuffix}'
 
-// Reference existing Event Hub Namespace when creating a new Event Hub in it
-resource existingEventHubNamespaceRef 'Microsoft.EventHub/namespaces@2024-01-01' existing = if (useExistingEventHubNamespace && !useExistingEventHub) {
+// Reference existing Event Hub Namespace (for creating new Event Hub or when using existing Event Hub)
+resource existingEventHubNamespaceRef 'Microsoft.EventHub/namespaces@2024-01-01' existing = if (useExistingEventHubNamespace) {
   name: existingEventHubNamespaceName
 }
 
@@ -125,6 +125,18 @@ resource newEventHubInExistingNamespace 'Microsoft.EventHub/namespaces/eventhubs
   name: eventHubName
   properties: {
     messageRetentionInDays: 1
+  }
+}
+
+// Grant Event Hub Data Sender role to the deploying user when using existing namespace
+// This ensures the event simulator works regardless of whether Event Hub is new or existing
+resource eventHubRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (useExistingEventHubNamespace) {
+  name: guid(existingEventHubNamespaceRef.id, userObjectId, 'Azure Event Hubs Data Sender')
+  scope: existingEventHubNamespaceRef
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2b629674-e913-4c01-ae53-ef4638d8f975') // Azure Event Hubs Data Sender
+    principalId: userObjectId
+    principalType: 'User'
   }
 }
 
@@ -193,9 +205,11 @@ output AZURE_FABRIC_CAPACITY_NAME string = useExistingFabricCapacity ? existingF
 output AZURE_FABRIC_CAPACITY_ADMINISTRATORS array = fabricTotalAdminMembers
 
 @description('The name of the Event Hub Namespace for ingestion.')
+#disable-next-line BCP318
 output AZURE_EVENT_HUB_NAMESPACE_NAME string = useExistingEventHubNamespace ? existingEventHubNamespaceName : eventHubNamespaceModule!.outputs.name
 
 @description('The hostname of the Event Hub Namespace for ingestion.')
+#disable-next-line BCP318
 output AZURE_EVENT_HUB_NAMESPACE_HOSTNAME string = useExistingEventHubNamespace ? '${existingEventHubNamespaceName}.servicebus.windows.net' : '${eventHubNamespaceModule!.outputs.name}.servicebus.windows.net'
 
 @description('The name of the Event Hub for ingestion.')

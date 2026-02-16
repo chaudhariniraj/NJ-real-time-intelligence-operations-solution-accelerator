@@ -338,6 +338,7 @@ azd env set FABRIC_WORKSPACE_NAME "My Existing Workspace Name"
 >
 > - `azd` always deploys to a single resource group; if you reuse an existing Event Hub Namespace, deploy to the RG that contains it.
 > - **IMPORTANT:** `EXISTING_EVENT_HUB_NAME` requires `EXISTING_EVENT_HUB_NAMESPACE_NAME` to also be set (Event Hub name alone will be ignored)
+> - The deploying user is automatically granted \"Azure Event Hubs Data Sender\" role for the event simulator
 > - Fabric Capacity is looked up by name across your tenant (no resource group needed)
 > - For existing Fabric Workspace, provide the exact workspace name - the deployment will detect and reuse it
 >   - The workspace must already be assigned to the capacity you select (the template does not change capacity assignment automatically)
