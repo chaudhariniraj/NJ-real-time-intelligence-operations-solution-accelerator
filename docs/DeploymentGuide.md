@@ -11,7 +11,7 @@ Deploy the **Real-Time Intelligence for Operations Solution Accelerator** using 
 | [**Overview**](#overview) | Two-phase deployment architecture explained |
 | [**Prerequisites & Setup**](#step-1-prerequisites--setup) | Azure and Fabric requirements, software installation |
 | [**Deployment Environment**](#step-2-choose-your-deployment-environment) | Choose deployment method: Local, Cloud Shell, Codespaces, Dev Container, or GitHub Actions |
-| [**Configuration Settings**](#step-3-configure-deployment-settings---advanced-configuration) | Optional: Customize resource names and settings |
+| [**Configuration Settings**](#step-3-configure-deployment-settings-optional) | Optional: Customize resource names and settings |
 | [**Deploy the Solution**](#step-4-deploy-the-solution) | Execute deployment with step-by-step instructions |
 | [**Post-Deployment Configuration**](#step-5-post-deployment-configuration) | Set up Data Agent, Simulator, Activator, and verify components |
 | [**Deployment Results**](#step-6-deployment-results) | Verify Azure and Fabric resources |
@@ -715,7 +715,7 @@ If automated cleanup fails:
 
 ## Known Issues and Troubleshooting
 
-For common deployment problems and quick fixes (including Fabric workspace/capacity mismatches), see [Troubleshooting.md](Troubleshooting.md).
+For common deployment problems and quick fixes (including Fabric workspace/capacity mismatches), see below.
 
 ### Fabric REST API Permission Issues
 
