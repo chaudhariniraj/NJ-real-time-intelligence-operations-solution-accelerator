@@ -42,10 +42,10 @@ resource newEventHub 'Microsoft.EventHub/namespaces/eventhubs@2024-01-01' = {
   }
 }
 
-// Grant Event Hub Data Sender role to the deploying user
+// Grant Event Hub Data Sender role to the deploying user on the Event Hub resource. This allows the user to send messages to the Event Hub after deployment.
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(existingNamespace.id, userObjectId, 'Azure Event Hubs Data Sender')
-  scope: existingNamespace
+  name: guid(newEventHub.id, userObjectId, 'Azure Event Hubs Data Sender')
+  scope: newEventHub
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2b629674-e913-4c01-ae53-ef4638d8f975') // Azure Event Hubs Data Sender
     principalId: userObjectId

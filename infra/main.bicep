@@ -146,12 +146,12 @@ module eventHubNamespaceModule 'br/public:avm/res/event-hub/namespace:0.13.0' = 
       {
         name: eventHubName
         messageRetentionInDays: 1
-      }
-    ]
-    roleAssignments: [
-      {
-        roleDefinitionIdOrName: 'Azure Event Hubs Data Sender'
-        principalId: userObjectId
+        roleAssignments: [
+          {
+            roleDefinitionIdOrName: 'Azure Event Hubs Data Sender'
+            principalId: userObjectId
+          }
+        ]
       }
     ]
     enableTelemetry: enableTelemetry
