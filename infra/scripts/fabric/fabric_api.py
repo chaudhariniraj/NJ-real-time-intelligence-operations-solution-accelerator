@@ -799,7 +799,6 @@ class FabricApiClient:
             },
             "credentialDetails": {
                 "singleSignOnType": "None",
-                "skipTestConnection": True,
                 "credentials": {
                     "credentialType": "Basic", # the endpoint only accepts Basic auth, but takes SAS key with policy name as password and username
                     "username": shared_access_policy_name, #"RootManageSharedAccessKey",
@@ -862,7 +861,6 @@ class FabricApiClient:
                 },
                 "credentialDetails": {
                     "singleSignOnType": "None",
-                    "skipTestConnection": True,
                     "credentials": {
                         "credentialType": "Basic", # the endpoint only accepts Basic auth, but takes SAS key with policy name as password and username
                         "username": shared_access_policy_name,
