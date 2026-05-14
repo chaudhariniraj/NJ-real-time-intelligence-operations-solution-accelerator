@@ -3,25 +3,6 @@ name: CI/CD Azure - Real-Time Intelligence Operations
 # Trigger the workflow on manual dispatch
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - dev
-    paths:
-      - 'infra/**'
-      - 'src/**'
-      - 'azure.yaml'
-      - 'requirements.txt'
-      - '.github/workflows/azure-dev.yml'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'infra/**'
-      - 'src/**'
-      - 'azure.yaml'
-      - 'requirements.txt'
-      - '.github/workflows/azure-dev.yml'
 
 # Set up permissions for deploying with secretless Azure federated credentials
 permissions:
