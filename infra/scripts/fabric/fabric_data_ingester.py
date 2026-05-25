@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 import os
+import sys
 from azure.identity import AzureCliCredential
 from azure.kusto.data import KustoConnectionStringBuilder, KustoClient
 from azure.kusto.data.exceptions import KustoServiceError
@@ -284,4 +285,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\n❌ Unexpected error: {e}")
         sys.exit(1)
-        exit(1)
