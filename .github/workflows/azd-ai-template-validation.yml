@@ -35,7 +35,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     name: Validation steps
-    environment: 'rti-validate'
+    environment: 'production'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
