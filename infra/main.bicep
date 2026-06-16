@@ -212,9 +212,7 @@ output AZURE_EVENT_HUB_NAMESPACE_NAME string = useExistingEventHubNamespace ? ev
 
 @description('The hostname of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
-output AZURE_EVENT_HUB_NAMESPACE_HOSTNAME string = useExistingEventHubNamespace
-  ? '${eventHubNamespaceNameFromId}.servicebus.windows.net'
-  : '${eventHubNamespaceModule!.outputs.name}.servicebus.windows.net'
+output AZURE_EVENT_HUB_NAMESPACE_HOSTNAME string = useExistingEventHubNamespace ? '${eventHubNamespaceNameFromId}.servicebus.windows.net' : '${eventHubNamespaceModule!.outputs.name}.servicebus.windows.net'
 
 @description('The name of the Event Hub for ingestion.')
 output AZURE_EVENT_HUB_NAME string = eventHubName
