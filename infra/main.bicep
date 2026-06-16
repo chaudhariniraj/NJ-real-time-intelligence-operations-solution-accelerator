@@ -91,13 +91,15 @@ var solutionSuffix = toLower(trim(replace(
 )))
 
 @description('Tag, Created by user name')
-param createdBy string = contains(deployer(), 'userPrincipalName')? split(deployer().userPrincipalName, '@')[0]: deployer().objectId
+param createdBy string = contains(deployer(), 'userPrincipalName')
+  ? split(deployer().userPrincipalName, '@')[0]
+  : deployer().objectId
 
 var allTags = union(
   {
     'azd-env-name': solutionName
     TemplateName: 'Real-time Ingestion Fabric Solution Accelerator'
-    Type:'Non-WAF'
+    Type: 'Non-WAF'
   },
   tags
 )
@@ -197,14 +199,18 @@ output AZURE_RESOURCE_GROUP string = resourceGroup().name
 
 @description('The name of the Fabric capacity resource')
 #disable-next-line BCP318
-output AZURE_FABRIC_CAPACITY_NAME string = useExistingFabricCapacity? existingFabricCapacityName: fabricCapacity!.outputs.name
+output AZURE_FABRIC_CAPACITY_NAME string = useExistingFabricCapacity
+  ? existingFabricCapacityName
+  : fabricCapacity!.outputs.name
 
 @description('The identities added as Fabric Capacity Admin members')
 output AZURE_FABRIC_CAPACITY_ADMINISTRATORS array = fabricTotalAdminMembers
 
 @description('The resource ID of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
-output AZURE_EVENT_HUB_NAMESPACE_ID string = useExistingEventHubNamespace? existingEventHubNamespaceId: eventHubNamespaceModule!.outputs.resourceId
+output AZURE_EVENT_HUB_NAMESPACE_ID string = useExistingEventHubNamespace
+  ? existingEventHubNamespaceId
+  : eventHubNamespaceModule!.outputs.resourceId
 
 @description('The name of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
