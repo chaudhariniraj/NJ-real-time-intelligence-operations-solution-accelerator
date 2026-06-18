@@ -91,13 +91,15 @@ var solutionSuffix = toLower(trim(replace(
 )))
 
 @description('Tag, Created by user name')
-param createdBy string = contains(deployer(), 'userPrincipalName')? split(deployer().userPrincipalName, '@')[0]: deployer().objectId
+param createdBy string = contains(deployer(), 'userPrincipalName')
+  ? split(deployer().userPrincipalName, '@')[0]
+  : deployer().objectId
 
 var allTags = union(
   {
     'azd-env-name': solutionName
     TemplateName: 'Real-time Ingestion Fabric Solution Accelerator'
-    Type:'Non-WAF'
+    Type: 'Non-WAF'
   },
   tags
 )
@@ -153,7 +155,7 @@ module eventHubNamespaceModule 'br/public:avm/res/event-hub/namespace:0.14.1' = 
         messageRetentionInDays: 1
         roleAssignments: [
           {
-            roleDefinitionIdOrName: 'Azure Event Hubs Data Sender'
+            roleDefinitionIdOrName: '2b629674-e913-4c01-ae53-ef4638d8f975' //Azure Event Hubs Data Sender
             principalId: userObjectId
           }
         ]
@@ -197,22 +199,30 @@ output AZURE_RESOURCE_GROUP string = resourceGroup().name
 
 @description('The name of the Fabric capacity resource')
 #disable-next-line BCP318
-output AZURE_FABRIC_CAPACITY_NAME string = useExistingFabricCapacity ? existingFabricCapacityName : fabricCapacity!.outputs.name
+output AZURE_FABRIC_CAPACITY_NAME string = useExistingFabricCapacity
+  ? existingFabricCapacityName
+  : fabricCapacity!.outputs.name
 
 @description('The identities added as Fabric Capacity Admin members')
 output AZURE_FABRIC_CAPACITY_ADMINISTRATORS array = fabricTotalAdminMembers
 
 @description('The resource ID of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
-output AZURE_EVENT_HUB_NAMESPACE_ID string = useExistingEventHubNamespace ? existingEventHubNamespaceId : eventHubNamespaceModule!.outputs.resourceId
+output AZURE_EVENT_HUB_NAMESPACE_ID string = useExistingEventHubNamespace
+  ? existingEventHubNamespaceId
+  : eventHubNamespaceModule!.outputs.resourceId
 
 @description('The name of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
-output AZURE_EVENT_HUB_NAMESPACE_NAME string = useExistingEventHubNamespace ? eventHubNamespaceNameFromId : eventHubNamespaceModule!.outputs.name
+output AZURE_EVENT_HUB_NAMESPACE_NAME string = useExistingEventHubNamespace
+  ? eventHubNamespaceNameFromId
+  : eventHubNamespaceModule!.outputs.name
 
 @description('The hostname of the Event Hub Namespace for ingestion.')
 #disable-next-line BCP318
-output AZURE_EVENT_HUB_NAMESPACE_HOSTNAME string = useExistingEventHubNamespace ? '${eventHubNamespaceNameFromId}.servicebus.windows.net' : '${eventHubNamespaceModule!.outputs.name}.servicebus.windows.net'
+output AZURE_EVENT_HUB_NAMESPACE_HOSTNAME string = useExistingEventHubNamespace
+  ? '${eventHubNamespaceNameFromId}.servicebus.windows.net'
+  : '${eventHubNamespaceModule!.outputs.name}.servicebus.windows.net'
 
 @description('The name of the Event Hub for ingestion.')
 output AZURE_EVENT_HUB_NAME string = eventHubName
@@ -227,7 +237,11 @@ output USING_EXISTING_EVENT_HUB_NAMESPACE bool = useExistingEventHubNamespace
 output USING_EXISTING_FABRIC_CAPACITY bool = useExistingFabricCapacity
 
 @description('The resource group name where the Event Hub Namespace is located. May differ from deployment RG when reusing namespace from different location.')
-output AZURE_EVENT_HUB_RESOURCE_GROUP string = useExistingEventHubNamespace ? eventHubNamespaceResourceGroup : resourceGroup().name
+output AZURE_EVENT_HUB_RESOURCE_GROUP string = useExistingEventHubNamespace
+  ? eventHubNamespaceResourceGroup
+  : resourceGroup().name
 
 @description('The subscription ID where the Event Hub Namespace is located. May differ from deployment subscription when reusing namespace from different subscription.')
-output AZURE_EVENT_HUB_SUBSCRIPTION_ID string = useExistingEventHubNamespace ? eventHubNamespaceSubscriptionId : subscription().subscriptionId
+output AZURE_EVENT_HUB_SUBSCRIPTION_ID string = useExistingEventHubNamespace
+  ? eventHubNamespaceSubscriptionId
+  : subscription().subscriptionId
