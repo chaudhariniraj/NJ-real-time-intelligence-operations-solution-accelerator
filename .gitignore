@@ -1,0 +1,20 @@
+# VS Code workspace settings
+.vscode
+
+# .azure folder 
+.azure/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python virtual environments
+.venv/  
+venv/
+
+# Python bytecode cache
+# Automatically generated when Python runs .py files
+__pycache__/
+
+/infra/data/temp/
